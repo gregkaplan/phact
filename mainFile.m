@@ -1,16 +1,14 @@
 % SeHyoun Ahn, Greg Kaplan, Ben Moll, and Tom Winberry
 % May 15th, 2016
 
-%clear;
-%clc;
-%close all;
+clear;
+clc;
+close all;
 
 %% SOLUTION APPROACH
 
 reduceDistribution = 1;
 reduceV = 1;
-rerun = 0;
-if rerun == 1
 %----------------------------------------------------------------
 % Set economic parameters 
 %----------------------------------------------------------------
@@ -187,7 +185,6 @@ fprintf('...Done!\n')
 fprintf('Time to compute derivatives: %2.4f seconds\n\n\n',toc(t0))
 
 % define matrices
-end
 
 g0 = mVarsDotDerivs;
 g1 = -mVarsDerivs;
