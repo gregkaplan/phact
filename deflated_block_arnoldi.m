@@ -54,7 +54,7 @@ for i = 1:(m-1)
                 aux(:,k) = aux(:,k) - Q(:,end)*(Q(:,end)'*aux(:,k));
             end
         else
-            disp('dropped one');
+            disp('deflated one vector');
         end
     end
 
@@ -66,8 +66,12 @@ for i = 1:(m-1)
     Q = bsxfun(@rdivide,Q,sqrt(sum(Q.^2)));
 end
 
+if (m == 1)
+    basis = Q;
+end
+
 if isa(A,'function_handle')
     [~,error] = qr(A(Q) - basis*(basis'*(A(Q))),0);
 else
     [~,error] = qr(A*Q - basis*(basis'*(A*Q)),0);
-end	  
+end
