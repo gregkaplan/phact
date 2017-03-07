@@ -4,6 +4,8 @@ function [g1,psi,pi,c,g0] = change_basis(basis,inv_basis,g1,psi,pi,c,g0)
 % by SeHyoun Ahn, June 2016
 %
 % This is self-explanatory, so just check the codes below.
+%
+% Parameters: g0 is optional
 
 g1 = basis*g1*inv_basis;
 pi = basis*pi;
