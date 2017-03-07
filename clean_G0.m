@@ -1,18 +1,20 @@
-function [base,inv_base,g1,c,pi,psi] = cleanG0(g0,g1,c,pi,psi)
-% Inverts g0 using SVD.
+function [state_red,inv_state_red,g0,g1,c,pi,psi] = clean_G0(g0,g1,c,pi,psi)
+% Solves out static constraints of the linear model using SVD
+%
+% Input/output/References: It will be faster to read the codes below
 %
 % by SeHyoun Ahn, June 2016
 
 tmp=(max(abs([g0,psi]),[],2)==0);
 redundant=find(tmp);
 keep=find(1-tmp);
-base=sparse(null(full(g1(redundant,:))));
+inv_state_red=sparse(null(full(g1(redundant,:))));
 
-g0=base'*g0*base;
-g1=base'*g1*base;
+g0=inv_state_red'*g0*inv_state_red;
+g1=inv_state_red'*g1*inv_state_red;
 g1=g0\g1;
-psi=g0\base'*psi;
-pi=g0\base'*pi;
-c=g0\base'*c;
+psi=g0\inv_state_red'*psi;
+pi=g0\inv_state_red'*pi;
+c=g0\inv_state_red'*c;
 
-inv_base = base';
+state_red = inv_state_red';

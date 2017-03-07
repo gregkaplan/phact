@@ -1,6 +1,8 @@
-function [base,inv_base,g1,c,pi,psi] = clean_G0_sparse(g0,g1,c,pi,psi)
-% Inverts g0. For certain form on non-invertible g0 coming from constraints
-%    it will compute the proper inverse.
+function [state_red,inv_state_red,g0,g1,c,pi,psi] = clean_G0_sparse(g0,g1,c,pi,psi)
+% Solves out static constraints of the linear model by solving out last n_p
+%     variables with 0 rows in g0.
+%
+% Input/Output/Rerences: It will be faster to read the codes below
 %
 % by SeHyoun, June 2106
 
@@ -11,16 +13,16 @@ redundant = find(tmp);
 keep=find(1-tmp);
 n_keep = length(keep);
 
-base = sparse(n,n_keep);
-base(keep,:) = speye(n_keep);
-base(redundant,:) = -g1(redundant,redundant)\g1(redundant,keep);
+inv_state_red = sparse(n,n_keep);
+inv_state_red(keep,:) = speye(n_keep);
+inv_state_red(redundant,:) = -g1(redundant,redundant)\g1(redundant,keep);
 
-inv_base = sparse(n_keep,n);
-inv_base(:,keep)=speye(n_keep);
+state_red = sparse(n_keep,n);
+state_red(:,keep)=speye(n_keep);
 
-g0=inv_base*g0*base;
-g1=inv_base*g1*base;
+g0=state_red*g0*inv_state_red;
+g1=state_red*g1*inv_state_red;
 g1=g0\g1;
-psi=g0\inv_base*psi;
-pi=g0\inv_base*pi;
-c=g0\inv_base*c;
+psi=g0\state_red*psi;
+pi=g0\state_red*pi;
+c=g0\state_red*c;
