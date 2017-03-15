@@ -54,7 +54,7 @@ for i = 1:(m-1)
                 aux(:,k) = aux(:,k) - Q(:,end)*(Q(:,end)'*aux(:,k));
             end
         else
-            disp('deflated one vector');
+            disp('<deflated_block_arnoldi>: Linear dependence, deflating one vector');
         end
     end
 
