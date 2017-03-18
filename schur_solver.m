@@ -8,7 +8,7 @@ function [G1,C,impact,eu,F]=schur_solver(g0,g1,c,psi,pi,continuous,check_exist,c
 %             Computational economics 20.1 (2002): 1-20.
 %
 % PARAMETERS:
-%    Check Sims's paper for notation
+%    Check Sims's paper for notation or Our Paper for notation
 %    continuous = 1 for a continuous time problem (default)
 %                0 for a discrete time problem
 %    check_exist = 1 check for existence of solution (default)
@@ -55,35 +55,42 @@ n = size(g1,1);
 %% Schur Decomposition
 [U,T] = schur(full(g1),'real');
 if continuous
-    [U,T] = ordschur(U,T,'lhp');
-    g_eigs = ordeig(T);
+    g_eigs = real(ordeig(T));
     nunstab = sum(g_eigs>0);
     if n_v > -1 
-        if nunstab > n_v
-            aux = real(g_eigs);
-            aux = sort(aux(aux>0),'descend');
-            warning('There are more than n_v number of positive eigenvalues with smallest values:');
-            disp(aux(end-nunstab+n_v+1:end));
-        end
+        [aux,ind] = sort(g_eigs,'descend');
+        locs = ones(n,1);
+        locs(ind(1:n_v)) = 0;
+        [U,T] = ordschur(U,T,locs);
         nunstab = n_v;
+        if nunstab > n_v
+            warning('<schur_solver>: There are more than n_v number of positive eigenvalues with smallest values:');
+            disp(aux(n_v+1:nunstab));
+        end
+    else
+        [U,T] = ordschur(U,T,'lhp');
     end
 else
-    [U,T] = ordschru(U,T,'udi');
     g_eigs = abs(ordeig(T));
-    nunstab = sum(g_eigs<1);
+    nunstab = sum(g_eigs>1);
     if n_v > -1
+        [aux,ind] = sort(g_eigs,'descend');
+        locs = ones(n,1);
+        locs(ind(1:n_v)) = 0;
+        [U,T] = ordschur(U,T,locs);
+        nunstab = n_v;
         if nunstab > n_v
-            aux = abs(g_eigs);
-            aux = sort(aux(aux>1),'descend');
-            warning('There are more than n_v number of positive eigenvalues with smallest values:');
-            disp(aux(end-nunstab+n_v+1:end));
+            warning('<schur_solver>: There are more than n_v number of positive eigenvalues with smallest values:');
+            disp(aux(n_v+1:nunstab));
         end
         nunstab = n_v;
+    else
+	[U,T] = ordschru(U,T,'udi');
     end
 end
 
-u2 = U(:,n-nunstab+1:n)';
 u1 = U(:,1:n-nunstab)';
+u2 = U(:,n-nunstab+1:n)';
 
 etawt = u2*pi;
 [ueta,deta,veta] = svd(etawt);
@@ -105,13 +112,11 @@ if check_exist
     if isempty(bigev)
         eu(1) = 1;
     else
-        disp(norm(uz-ueta*ueta'*uz,'fro'))
-        disp(realsmall*n)
         eu(1) = (norm(uz-ueta*ueta'*uz,'fro') < realsmall*n);
     end
 
-    if (~eu(1) & (n_v == -1))
-        error('Solution does not exist');
+    if (~eu(1) && (n_v == -1))
+        warning('<schur_solver>: Solution does not exist');
     end
     impact = real(-pi*veta*(deta\ueta')*uz*dz*vz'+psi);
 else
@@ -133,4 +138,4 @@ if check_uniq
     end
 end
 F = u1(:,1:nunstab)'*inv(u1(:,nunstab+1:end)');
-C = 1;  	% constant term is not coded yet
+C = c;  	% constant term is not coded yet
