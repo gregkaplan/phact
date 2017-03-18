@@ -66,7 +66,7 @@ if (method == 'implicit')
 elseif (method == 'explicit')
     gg1 = speye(size(g1))+g1*dt;
     for n = 1 : N
-        values(:,n+1) = gg1*(values(:,n) + (dt^(1/2))*impact*shocks(n,:)');	
+        values(:,n+1) = gg1*(values(:,n) + (dt^(1/2))*impact*shocks(:,n));	
     end
     values = values(:,2:end);
     if nargin > 6
@@ -76,5 +76,5 @@ elseif (method == 'explicit')
         end
     end
 else
-    error('Unknown method');
+    error('<simulate>: Unknown method');
 end
