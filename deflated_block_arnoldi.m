@@ -54,12 +54,14 @@ for i = 1:(m-1)
                 aux(:,k) = aux(:,k) - Q(:,end)*(Q(:,end)'*aux(:,k));
             end
         else
-            disp('<deflated_block_arnoldi>: Linear dependence, deflating one vector');
+            % Uncomment if you want messages when deflation happens
+            % disp('<deflated_block_arnoldi>: Linear dependence, deflating one vector');
         end
     end
 
     % Second run of modified gram-schmidt to reorthogonalize to reduce
-    %    rounding error.
+    %    rounding error. Might not be necessary, but it is a safety
+    %    measure.
     for j = 1:size(basis,2)
         Q = Q - bsxfun(@times,basis(:,j),(basis(:,j)'*Q));
     end

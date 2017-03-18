@@ -106,3 +106,4 @@ if plotting
     end
 end
 epsilon = max(abs(p_red-p)./abs(p),[],3);
+fprintf('<internal_consistency_check>: The maximum relative error is %.6e\n',max(max(epsilon)));
