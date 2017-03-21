@@ -32,6 +32,9 @@ function [to_fine, from_fine] = twoDquad_spline(x_fine,y_fine,x_knots,y_knots)
 %   disp('press any key');
 %   pause();
 %   surf(reshape(z_approxed,100,100));
+%
+% SYNTAX:
+% [to_fine, from_fine] = twoDquad_spline(x_fine,y_fine,x_knots,y_knots)
 
   
 n_x_fine = length(x_fine);

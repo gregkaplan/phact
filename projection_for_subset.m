@@ -27,7 +27,9 @@ function [from_approx, to_approx] = projection_for_subset(from_small,to_small,n_
 %    disp([z(end-n_trailing+1:end),z_approxed(end-n_trailing+1:end)]);
 %    plot(x,z(1:end-n_trailing),'b-');hold on;plot(x,z_approxed(1:end-n_trailing),'r--');
 %    legend('exact','approximated');
-
+%
+% SYNTAX:
+% [from_approx, to_approx] = projection_for_subset(from_small,to_small,n_pre,n_post)
 
 [n_full,n_red] = size(from_small);
 from_approx = spdiags(ones(n_red+n_pre,1),0,n_full+n_pre,n_pre+n_red);

@@ -22,6 +22,9 @@ function [state_red,inv_state_red,n_g_red] = krylov_reduction(g0,g1,n_v,n_g,n_ar
 %    state_red = tranformation to get from full grid to reduced states
 %    inv_state_red = inverse transform
 %    n_g_red = number of state variables after reduction
+%
+% SYNTAX:
+% [state_red,inv_state_red,n_g_red] = krylov_reduction(g0,g1,n_v,n_g,n_arnoldi,varargin)
 
 
 if nargin == 8

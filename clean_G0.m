@@ -4,7 +4,9 @@ function [state_red,inv_state_red,g0,g1,c,pi,psi] = clean_G0(g0,g1,c,pi,psi)
 % Input/output/References: It will be faster to read the codes below
 %
 % by SeHyoun Ahn, June 2016
-
+%
+% SYNTAX:
+% [state_red,inv_state_red,g0,g1,c,pi,psi] = clean_G0(g0,g1,c,pi,psi)
 tmp=(max(abs([g0,psi]),[],2)==0);
 redundant=find(tmp);
 keep=find(1-tmp);

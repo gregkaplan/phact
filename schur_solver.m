@@ -1,4 +1,4 @@
-function [G1,C,impact,eu,F]=schur_solver(g0,g1,c,psi,pi,continuous,check_exist,check_uniq,varargin)
+function [G1,C,impact,eu,F]=schur_solver(g0,g1,c,psi,pi,continuous,check_exist,check_uniq,n_v)
 % Solver based on Schur decomposition (This is based on Sims's gensys, but adjusted
 %    to take advantage of special case that applies to heterogeneous agent models).
 %
@@ -15,7 +15,7 @@ function [G1,C,impact,eu,F]=schur_solver(g0,g1,c,psi,pi,continuous,check_exist,c
 %                 0 existence has been checked before
 %    check_uniq = 0 do not check for uniqueness (default)
 %                1 check for uniqueness
-%    varargin{1} = number of unstable roots 
+%    n_v = number of unstable roots 
 %
 % OUPUTS:
 %    eu(1) = 1 solution exists
@@ -24,12 +24,12 @@ function [G1,C,impact,eu,F]=schur_solver(g0,g1,c,psi,pi,continuous,check_exist,c
 %    eu(2) = 1 solution is unique
 %            0 solution is not unique
 %           -5 Flag for checking uniqueness is off
-
+%
+% SYNTAX:
+% [G1,C,impact,eu,F]=schur_solver(g0,g1,c,psi,pi,continuous,check_exist,check_uniq,varargin)
 
 %% Set Default Values %%
 switch nargin
-    case 9
-        n_v = varargin{1};
     case 8
         n_v = -1;
     case 7
@@ -138,4 +138,5 @@ if check_uniq
     end
 end
 F = u1(:,1:nunstab)'*inv(u1(:,nunstab+1:end)');
+impact = [F*psi(nunstab+1:end);psi(nunstab+1:end)];
 C = c;  	% constant term is not coded yet

@@ -25,6 +25,9 @@ function [from_approx, to_approx] = extend_to_nd(from_small,to_small,n_prior,n_p
 %
 % NOTE: Though it is written as 1 dimension to n dimension, if the approximation
 %    is over m-dimensional, it can still be extended over (n-m) dimension
+%
+% SYNTAX:
+% [from_approx, to_approx] = extend_to_nd(from_small,to_small,n_prior,n_post)
 
 
 from_approx = kron(kron(speye(n_post),from_small),speye(n_prior));

@@ -22,6 +22,10 @@ function [basis,Q,error] = block_arnoldi(A,B,m,varargin)
 %
 % Note: Still uses bsxfun for backward compatibility, but can be
 %           updated for explicit expansion for MATLAB 2017a and later
+%
+% SYNTAX:
+% [basis,Q,error] = block_arnoldi(A,B,m,varargin)
+
 
 if nargin == 5
     basis = varargin{1};

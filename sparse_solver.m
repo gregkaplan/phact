@@ -10,6 +10,8 @@ function [G1, impact] = sparse_solver(g1,psi,n_v,n_g)
 % PARAMETERS/OUTPUTS:
 %     Read attached documentation
 %
+% SYNTAX:
+% [G1, impact] = sparse_solver(g1,psi,n_v,n_g)
 
 %-100 is set to find negative eigenvalues. This value can be changed
 [x,v,flag] = eigs(g1,n_g,-100);

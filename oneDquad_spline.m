@@ -20,7 +20,9 @@ function [from_knots, to_knots] = oneDquad_spline(x,knots)
 %     y = exp(x);
 %     plot(x,y,'b-');hold on; plot(x,from_knots*to_knots*y,'r--');
 %     legend('Exact Function','Quad Poly Spline Approx');
-
+%
+% SYNTAX:
+% [from_knots, to_knots] = oneDquad_spline(x,knots)
 
 n_a = length(x);
 n_knots = length(knots);

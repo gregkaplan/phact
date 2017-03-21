@@ -19,6 +19,9 @@ function [from_cheb, to_cheb] = cheb_1_dim(x,n_cheby)
 %     y = exp(x);
 %     plot(x,y,'b-');hold on; plot(x,from_cheb*to_cheb*y,'r--');
 %     legend('Exact Function','Chebyshev Polynomial Approximation');
+%
+% SYNTAX:
+% [from_cheb, to_cheb] = cheb_1_dim(x,n_cheby)
 
 
 if size(x,2)~=1

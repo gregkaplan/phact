@@ -5,6 +5,8 @@ function [state_red,inv_state_red,g0,g1,c,pi,psi] = clean_G0_sparse(g0,g1,c,pi,p
 % Input/Output/Rerences: It will be faster to read the codes below
 %
 % by SeHyoun, June 2106
+%
+% [state_red,inv_state_red,g0,g1,c,pi,psi] = clean_G0_sparse(g0,g1,c,pi,psi)
 
 n = size(g0,1);
 tmp = (max(abs(g0),[],2)==0);
