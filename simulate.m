@@ -39,6 +39,9 @@ function [values,vtime] = simulate(g1,impact,T,N,shocks,method,blowup,subset)
 %
 %    For example with blowup and subset, see Krusell-Smith case example
 %       available at < > 
+%
+% SYNTAX:
+% [values,vtime] = simulate(g1,impact,T,N,shocks,method,blowup,subset)
 
 vtime = linspace(0,T,N);
 dt = vtime(2)-vtime(1);

@@ -11,7 +11,7 @@
 %
 % This is a stripped down example where the KS problem is solved once so
 % that the code can be adapted more directly to problem of user's interest.
-% For more detailed example, check \<mainfile_web.m\> or the website output
+% For more detailed example, check <mainfile_web.m> or the website output
 % at <<https:// >>
 %
 % Estimated Runtime: < 1 second
@@ -29,7 +29,7 @@
 % * equilibrium_conditions.m
 % * plot_IRFs.m
 % Relevant files except for auto diff toolbox, can be found in
-%    /example/KrusellSmith folder of phact toolbox
+%    /examples/KrusellSmith folder of phact toolbox
 %
 %%
 
@@ -47,7 +47,7 @@ addpath('/home/sehyoun/Dropbox/0Packages/PHACT');
 %                2   run full and compare with only state space reduction
 %                3   run full and compare with both reductions
 example_case = 3;
-reduceDist_hor = 2;        % m of K_m(A,b)
+reduceDist_hor = 5;        % m of K_m(A,b)
 
 % initialize shocks for simulation
 T = 200;
@@ -63,7 +63,8 @@ set_parameters;
 
 %% Step 1: Solve for Steady State
 % Non-stochastic steady state can be found using any methods. In
-%    particular, example codes can be found at <Ben's website>.
+%    particular, example codes can be found at
+%    <<http://www.princeton.edu/%7Emoll/HACTproject.htm>>.
 
 tStart = tic;
 fprintf('Computing steady state...\n')
@@ -93,7 +94,7 @@ varsSS(4*I+6,1) = ddelta * KSS;
 %    steady-state can be used almost verbatim using automatic
 %    differentiation toolbox as long as only the functions supported by
 %    automatic differentation are used. For list of supported functions and
-%    documentation of relevant syntax check <SeHyoun's AutoDiff>
+%    documentation of relevant syntax check <<https://github.com/sehyoun/MATLABAutoDiff>>
 fprintf('Taking derivatives of equilibrium conditions...\n')
 t0 = tic;
 
@@ -188,7 +189,7 @@ fprintf('Time to reduce dimensionality: %2.4f seconds\n\n\n',toc(t0))
 t0 = tic;
 fprintf('Solving reduced linear system...\n')
 
-[G1,~,impact,eu] = schur_solver(g0,g1,c,psi,pi,1,1,1);
+[G1,~,impact,eu,F] = schur_solver(g0,g1,c,psi,pi,1,1,1);
 
 fprintf('...Done!\n')
 fprintf('Existence and uniqueness? %2.0f and %2.0f\n',eu);
@@ -205,8 +206,9 @@ fprintf('...Done!\n')
 fprintf('Time to simulate model: %2.4f seconds\n\n\n',toc(t0))
 
 % Add state-states back in to get values in levels
+varsSS_small = varsSS(4*I:4*I+6,1);
 vAggregateTFP = simulated(1,:) + varsSS_small(1);
-vAggregateOuput = simulated(5,:) + varsSS_small(5);
+vAggregateOutput = simulated(5,:) + varsSS_small(5);
 vAggregateConsumption = simulated(6,:) + varsSS_small(6);
 vAggregateInvestment = simulated(7,:) + varsSS_small(7);
 
@@ -224,9 +226,10 @@ vAggregateInvestment_reduced = log(vAggregateInvestment) - log(varsSS_small(7));
 
 if example_case
     g1 = -mVarsDerivs;
+    psi = -mShocksDerivs;
     from_red = inv_state_red * from_spline;
     to_red = to_spline * state_red;
-    [epsilon] = internal_consistency_check(G1,impact,n_g_red,from_red,to_red,g1,F,n_v,n_g,200,varsSS,1);
+    [epsilon] = internal_consistency_check(G1,impact,n_g_red,from_red,to_red,g1,psi,F,n_v,n_g,600,varsSS,1,0);
 end
 
 %% (optional) Step 7: Plot relevant values

@@ -33,7 +33,7 @@
 % * plot_steady_state.m
 % * plot_IRFs.m
 % Relevant files except for auto diff toolbox, can be found in
-%    /example/KrusellSmith folder of phact toolbox
+%    /examples/KrusellSmith folder of phact toolbox
 %
 %%
 
@@ -48,7 +48,7 @@ addpath('/home/sehyoun/Dropbox/0Packages/PHACT');
 %                2   run full and compare with only state space reduction
 %                3   run full and compare with both reductions
 example_case = 3;
-reduceDist_hor = 2;        % m of K_m(A,b)
+reduceDist_hor = 50;        % m of K_m(A,b)
 
 % initialize shocks for simulation
 T = 200;
@@ -64,7 +64,8 @@ set_parameters;
 
 %% Step 1: Solve for Steady State
 % Non-stochastic steady state can be found using any methods. In
-%    particular, example codes can be found at <Ben's website>.
+%    particular, example codes can be found at
+%    <<http://www.princeton.edu/%7Emoll/HACTproject.htm>>.
 
 tStart = tic;
 fprintf('Computing steady state...\n')
@@ -97,7 +98,8 @@ plot_steady_state;
 %    steady-state can be used almost verbatim using automatic
 %    differentiation toolbox as long as only the functions supported by
 %    automatic differentation are used. For list of supported functions and
-%    documentation of relevant syntax check <SeHyoun's AutoDiff>
+%    documentation of relevant syntax check
+%    <<https://github.com/sehyoun/MATLABAutoDiff>>
 fprintf('Taking derivatives of equilibrium conditions...\n')
 t0 = tic;
 
@@ -272,9 +274,10 @@ vAggregateInvestment_reduced = log(vAggregateInvestment) - log(varsSS_small(7));
 % improve in the future. (For small problems, the speed is not an issue)
 
 g1 = -mVarsDerivs;
+psi = -mShocksDerivs;
 from_red = inv_state_red * from_spline;
 to_red = to_spline * state_red;
-[epsilon] = internal_consistency_check(G1,impact,n_g_red,from_red,to_red,g1,F,n_v,n_g,200,varsSS,1);
+[epsilon] = internal_consistency_check(G1,impact,n_g_red,from_red,to_red,g1,psi,F,n_v,n_g,1000,varsSS,1,0);
 
 %% (optional) Step 7: Plot relevant values
 % Plot impulse response functions
@@ -362,3 +365,16 @@ xlabel('Distribution Location','interpreter','latex')
 % the full model for the simple Krusell-Smith case, this ability to reduce
 % away irrelevant part will be essential for bigger problems.
 %
+
+%%
+% Lastly, some of the functions have lengthy parameters, you can always
+% type "help function_name;" to see documentation. All functions contain the
+% function call syntax as the last line, and thoese can be copied and
+% pasted into the program file. For example, to use the
+% internal_consistency_check function, you can call
+help internal_consistency_check;
+
+%%
+% and just copy the lastline of the documentation string. Alternately, you
+% can call "doc function_name" to read the doc string in the MATLAB help
+% browser, and "edit function_name" to see the function codes.
