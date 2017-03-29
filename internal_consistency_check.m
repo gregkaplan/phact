@@ -4,7 +4,9 @@ function [epsilon] = internal_consistency_check(G1,impact,n_g_red,from_red,to_re
 %
 % by SeHyoun Ahn, March 2017
 %
-% REFERENCE: <Our Paper>
+% REFERENCE: Ahn, SeHyoun, Greg Kaplan, Benjamin Moll, Thomas Winberry, and
+%    Christian Wolf. "When Inequality Matters for Macro and Macro Matters
+%    for Inequality."
 %
 % PARAMETERS:
 %    G1 = dynamics equation of the reduced model (usually output of
@@ -35,7 +37,7 @@ function [epsilon] = internal_consistency_check(G1,impact,n_g_red,from_red,to_re
 % EXAMPLES:
 %     This file requires very specific examples. See the example given in
 %     <examples/KrusellSmith/mainfile.m> example (provided from github at
-%     <<https://github.com/gregpkaplan/phact>>
+%     <https://github.com/gregpkaplan/phact>)
 %
 % SYNTAX (you can copy and paste the following) :
 % [epsilon] = internal_consistency_check(G1,impact,n_g_red,from_red,to_red,g1,psi,F,n_v,n_g,T,steadystate,plotting,IRF,dt)

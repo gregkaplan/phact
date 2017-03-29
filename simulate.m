@@ -6,7 +6,9 @@ function [values,vtime] = simulate(g1,impact,T,N,shocks,method,blowup,subset)
 %
 % by SeHyoun Ahn, March 2017
 %
-% REFERENCE:
+% REFERENCE: Ahn, SeHyoun, Greg Kaplan, Benjamin Moll, Thomas Winberry, and
+%    Christian Wolf. "When Inequality Matters for Macro and Macro Matters
+%    for Inequality."
 %
 % PARAMETERS:
 %    dx = g1*x*dt + impact*dZ

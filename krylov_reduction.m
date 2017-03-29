@@ -3,7 +3,9 @@ function [state_red,inv_state_red,n_g_red] = krylov_reduction(g0,g1,n_v,n_g,n_ar
 %
 % by SeHyoun Ahn, Sept 2016
 %
-% REFERENCES: <Our paper>
+% REFERENCE: Ahn, SeHyoun, Greg Kaplan, Benjamin Moll, Thomas Winberry, and
+%    Christian Wolf. "When Inequality Matters for Macro and Macro Matters
+%    for Inequality."
 %
 % PARAMETERS:
 %    g0 = LHS matrix, only used to check it satisfies require form

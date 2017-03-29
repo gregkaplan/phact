@@ -4,8 +4,12 @@ function [G1,C,impact,eu,F]=schur_solver(g0,g1,c,psi,pi,continuous,check_exist,c
 %
 % by SeHyoun Ahn, Dec 2016
 %
-% REFERENCES: Sims, Christopher A. "Solving linear rational expectations models."
-%             Computational economics 20.1 (2002): 1-20.
+% REFERENCES:
+%    * Sims, Christopher A. "Solving linear rational expectations models."
+%         Computational economics 20.1 (2002): 1-20.
+%    * Ahn, SeHyoun, Greg Kaplan, Benjamin Moll, Thomas Winberry, and
+%         Christian Wolf. "When Inequality Matters for Macro and Macro Matters
+%         for Inequality."
 %
 % PARAMETERS:
 %    Check Sims's paper for notation or Our Paper for notation
@@ -62,11 +66,14 @@ if continuous
         locs = ones(n,1);
         locs(ind(1:n_v)) = 0;
         [U,T] = ordschur(U,T,locs);
-        nunstab = n_v;
         if nunstab > n_v
             warning('<schur_solver>: There are more than n_v number of positive eigenvalues with smallest values:');
             disp(aux(n_v+1:nunstab));
+        elseif nunstab < n_v
+            warning('<schur_solver>: There are less than n_v number of positive eigenvalues:');
+            disp(aux(nunstab+1:n_v));
         end
+        nunstab = n_v;
     else
         [U,T] = ordschur(U,T,'lhp');
     end
@@ -78,10 +85,12 @@ else
         locs = ones(n,1);
         locs(ind(1:n_v)) = 0;
         [U,T] = ordschur(U,T,locs);
-        nunstab = n_v;
         if nunstab > n_v
             warning('<schur_solver>: There are more than n_v number of positive eigenvalues with smallest values:');
             disp(aux(n_v+1:nunstab));
+        elseif nunstab < n_v
+            warning('<schur_solver>: There are less than n_v number of positive eigenvalues:');
+            disp(aux(nunstab+1:n_v));
         end
         nunstab = n_v;
     else
