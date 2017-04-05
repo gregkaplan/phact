@@ -1,5 +1,6 @@
 function [state_red,inv_state_red,g0,g1,c,pi,psi] = clean_G0(g0,g1,c,pi,psi)
 % Solves out static constraints of the linear model using SVD
+%    Adapted from Chris Sims's gensys code
 %
 % Input/output/References: It will be faster to read the codes below
 %

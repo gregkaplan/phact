@@ -15,25 +15,28 @@
 % model will be solved with model reduction, to compare how well the model
 % reduction works. Lastly, different parts of observables will be
 % introduced to compare how the model reduction works with different
-% requirements.
+% requirements. We have updates to Internal Consistency check coming in the
+% future.
 %
 % Estimated Runtime: 1.5 seconds
 %
 % REFERENCES:
 %
-% * <Our Paper>
+% * Ahn, SeHyoun, Greg Kaplan, Benjamin Moll, Thomas Winberry, and
+% Christian Wolf. "When Inequality Matters for Macro and Macro Matters for
+% Inequality."
 % * Krusell, Per, and Anthony A. Smith, Jr. "Income and wealth heterogeneity in the macroeconomy." Journal of political Economy 106.5 (1998): 867-896.
 %
 % REQUIRES:
 %
-% * auto diff toolbox: <<https://github.com/sehyoun/MATLABAutoDiff>>
-% * phact toolbox: <<https://github.com/gregkaplan/phact>>
+% * auto diff toolbox: <https://github.com/sehyoun/MATLABAutoDiff>
+% * phact toolbox: <https://github.com/gregkaplan/phact>
 % * compute_steady_state.m
 % * equilibrium_conditions.m
 % * plot_steady_state.m
 % * plot_IRFs.m
 % Relevant files except for auto diff toolbox, can be found in
-%    /examples/KrusellSmith folder of phact toolbox
+%    /examples/KrusellSmith folder of phact toolbox provided on github
 %
 %%
 
@@ -65,7 +68,7 @@ set_parameters;
 %% Step 1: Solve for Steady State
 % Non-stochastic steady state can be found using any methods. In
 %    particular, example codes can be found at
-%    <<http://www.princeton.edu/%7Emoll/HACTproject.htm>>.
+%    <http://www.princeton.edu/~moll/HACTproject.htm>.
 
 tStart = tic;
 fprintf('Computing steady state...\n')
@@ -99,7 +102,9 @@ plot_steady_state;
 %    differentiation toolbox as long as only the functions supported by
 %    automatic differentation are used. For list of supported functions and
 %    documentation of relevant syntax check
-%    <<https://github.com/sehyoun/MATLABAutoDiff>>
+%    <https://github.com/sehyoun/MATLABAutoDiff>. Example usage/syntax of 
+%    automatic differentiation can be found at 
+%    <http://sehyoun.com/EXAMPLE_AutoDiff_Syntax.html>
 fprintf('Taking derivatives of equilibrium conditions...\n')
 t0 = tic;
 
@@ -117,7 +122,7 @@ tDerivs = toc(t0);
 fprintf('...Done!\n')
 fprintf('Time to compute derivatives: %2.4f seconds\n\n\n',tDerivs)
 if tDerivs > 1
-    warning('If you compile mex files for automatics differentiation, matrix vector multiplication will be slow');
+    warning('If you do not compile mex files for automatics differentiation, matrix vector multiplication will be slow');
     disp('Press any key to continue...');
     pause();
 end
@@ -271,7 +276,9 @@ vAggregateInvestment_reduced = log(vAggregateInvestment) - log(varsSS_small(7));
 % For large problem, we are forced to take explicit update, so it can take
 % awhile to run, but the good thing is that this only needs to be run at
 % the end. We are currently working on this, so speed for this part might
-% improve in the future. (For small problems, the speed is not an issue)
+% improve in the future. (For small problems, the speed is not an issue). A
+% different consistency check is in works, and will be updated in the
+% future.
 
 g1 = -mVarsDerivs;
 psi = -mShocksDerivs;
@@ -371,8 +378,8 @@ xlabel('Distribution Location','interpreter','latex')
 % type "help function_name;" to see documentation. All functions contain the
 % function call syntax as the last line, and thoese can be copied and
 % pasted into the program file. For example, to use the
-% internal_consistency_check function, you can call
-help internal_consistency_check;
+% krylov_reduction function, you can call
+help krylov_reduction;
 
 %%
 % and just copy the lastline of the documentation string. Alternately, you

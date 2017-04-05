@@ -1,6 +1,7 @@
 function [epsilon] = internal_consistency_check(G1,impact,n_g_red,from_red,to_red,g1,psi,F,n_v,n_g,T,steadystate,plotting,IRF,dt)
 % DOCSTRING TO BE UPDATED
 % Does an internal consistency check
+% XXX A different consistency check will be implemented XXX
 %
 % by SeHyoun Ahn, March 2017
 %

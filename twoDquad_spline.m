@@ -17,7 +17,7 @@ function [to_fine, from_fine] = twoDquad_spline(x_fine,y_fine,x_knots,y_knots)
 %   x = linspace(-1,1,100)';
 %   y = linspace(-1,1,100)';
 %
-%   % e^(-(x^2+y^2));
+%   % z = e^(-(x^2+y^2));
 %   z = exp(-bsxfun(@plus,x.^2,y'.^2));
 %   
 %   knot_x = linspace(-1,1,4)';
