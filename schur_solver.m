@@ -13,8 +13,13 @@ function [G1,C,impact,eu,F]=schur_solver(g0,g1,c,psi,pi,continuous,check_exist,c
 %
 % PARAMETERS:
 %    Check Sims's paper for notation or Our Paper for notation
+%
+%    XXXXX DO NOT USE DISCRETE TIME VERSION. IT PROBABLY IS WRONG XXXXXX
+%    The issue is noted in < https://github.com/gregkaplan/phact/issues/1 >
+%
 %    continuous = 1 for a continuous time problem (default)
 %                0 for a discrete time problem
+%
 %    check_exist = 1 check for existence of solution (default)
 %                 0 existence has been checked before
 %    check_uniq = 0 do not check for uniqueness (default)
