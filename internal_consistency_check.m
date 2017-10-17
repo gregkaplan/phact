@@ -131,9 +131,9 @@ if plotting
         figure;
         hold on;
         for j = 1:size(p,1)
-            plot(vTime,aux(j,:)','DisplayName',num2str(j));
+            plot(vTime,aux(j,:)','DisplayName',['variable ',num2str(j)]);
         end
-        title(['Relative Errors for shock ',num2str(i)]);
+        title(['Internal Consistency Check for Shock ',num2str(i)]);
         xlabel('time');
         ylabel('relative errors');
         legend('show');
