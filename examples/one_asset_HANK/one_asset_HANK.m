@@ -36,8 +36,11 @@
 %%
 % Setup the toolbox
 % Need to include folders containing the files
-addpath('/path/to/PHACT');
-addpath('/path/to/AutoDiff');
+%addpath('/path/to/PHACT');
+%addpath('/path/to/AutoDiff');
+
+addpath('/home/sehyoun/Dropbox/1Packages/PHACT');
+addpath('/home/sehyoun/Dropbox/1Packages/AutoDiff');
 
 % Turn off the warning message from auto diff
 % You should read the warning once, but turn it off after reading it.
@@ -47,7 +50,7 @@ warning('off','AutoDiff:maxmin')
 % Set options for this example run
 ReduceDistribution = 1;  % 1 for state space reduction 0 for not
 reduceV = 1;             % 1 for value function reduction 0 for not
-ReduceDist_hor = 37;     % Dimensionality of the Krylov subspace
+ReduceDist_hor = 20;     % Dimensionality of the Krylov subspace
 DisplayLev = 1;          % Determines verbosity of steady state calculation
 check_consistency = 1;   % Runs Step 6: Internal consistency check
 
@@ -127,7 +130,7 @@ end
 % Jump Variables
 if reduceV == 1
     % Reduce dimensionality of value function using splines
-    n_knots = 15;
+    n_knots = 12;
     c_power = 1;
     x = a';
     n_post = size(z,2);
@@ -199,17 +202,21 @@ wage = simulated(3,:)'/vars_SS(n_v+n_g+1);
 % A different internal consistency check will be implemented and updated in the
 %    future. This function should only be taken as a sanity check.
 
-g1 = -derivs(:,1:nVars);
-psi = -derivs(:,2*nVars+nEErrors+1:2*nVars+nEErrors+n_shocks);
-from_red = inv_state_red * from_spline;
-to_red = to_spline * state_red;
-[epsilon] = internal_consistency_check(G1,impact,n_g_red,from_red,to_red,g1,psi,F,n_v,n_g,1000,vars_SS,1,0.07);
-
+if check_consistency
+    g1 = -derivs(:,1:nVars);
+    psi = -derivs(:,2*nVars+nEErrors+1:2*nVars+nEErrors+n_shocks);
+    from_red = inv_state_red * from_spline;
+    to_red = to_spline * state_red;
+    [epsilon] = internal_consistency_check(G1,impact,n_g_red,from_red,to_red,g1,psi,F,n_v,n_g,1000,vars_SS,1,0.07);
+end
 
 %% (optional) Step 7: Plot relevant IRFs
 line_style = '-';
 color = 'blue';
-figure;
+line_style = '--';
+color = 'red';
+
+figure(1);
 subplot(2,3,1);
 hold on;
 plot(vTime,monetary_shock,'linewidth',1.5,'linestyle',line_style,'color',color);

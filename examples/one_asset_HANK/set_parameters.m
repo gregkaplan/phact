@@ -13,12 +13,12 @@ ceselast = 10;							 % elasticity of substitution / demand
 priceadjust = 100;
 
 % Policy parameters
-taylor_inflation = 0;		%taylor rule coefficient on inflation
+taylor_inflation = 1.25;	%taylor rule coefficient on inflation
 taylor_outputgap = 0;		%taylor rule coefficient on output
 labtax = 0.2;			% marginal tax rate
 govbondtarget = 6;		%multiple of quarterly GDP
 lumptransferpc = 0.06;	 %6% of quarterly GDP in steady state
-govbcrule_fixnomB = 0.1;
+govbcrule_fixnomB = 0.0;
 
 % Some aggregates
 Y_SS = 1;
@@ -65,8 +65,8 @@ niter_hours = 10;
 %% Set Grids
 
 %% Asset
-I          = 50;
-agridparam = 0.40; % 1 for linear
+I          = 100;
+agridparam = 1; % 1 for linear
 amin       = 0;
 amax       = 40;
 
