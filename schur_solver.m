@@ -24,7 +24,7 @@ function [G1,C,impact,eu,F]=schur_solver(g0,g1,c,psi,pi,continuous,check_exist,c
 %                 0 existence has been checked before
 %    check_uniq = 0 do not check for uniqueness (default)
 %                1 check for uniqueness
-%    n_v = number of unstable roots 
+%    n_v = number of unstable roots
 %
 % OUPUTS:
 %    eu(1) = 1 solution exists
@@ -66,7 +66,7 @@ n = size(g1,1);
 if continuous
     g_eigs = real(ordeig(T));
     nunstab = sum(g_eigs>0);
-    if n_v > -1 
+    if n_v > -1
         [aux,ind] = sort(g_eigs,'descend');
         locs = ones(n,1);
         locs(ind(1:n_v)) = 0;
@@ -152,5 +152,5 @@ if check_uniq
     end
 end
 F = u1(:,1:nunstab)'*inv(u1(:,nunstab+1:end)');
-impact = [F*psi(nunstab+1:end);psi(nunstab+1:end)];
+impact = [F*psi(nunstab+1:end,:);psi(nunstab+1:end,:)];
 C = c;  	% constant term is not coded yet
